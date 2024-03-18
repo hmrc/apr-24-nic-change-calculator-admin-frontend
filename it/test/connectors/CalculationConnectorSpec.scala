@@ -27,12 +27,13 @@ import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.test.WireMockSupport
 
 import java.time.Instant
 
 class CalculationConnectorSpec
   extends AnyFreeSpec
-    with WireMockHelper
+    with WireMockSupport
     with ScalaFutures
     with Matchers
     with IntegrationPatience
@@ -45,7 +46,7 @@ class CalculationConnectorSpec
   private lazy val app: Application =
     new GuiceApplicationBuilder()
       .configure(
-        "microservice.services.apr-24-nic-change-calculator.port" -> server.port
+        "microservice.services.apr-24-nic-change-calculator.port" -> wireMockServer.port
       )
       .build()
 
@@ -59,7 +60,7 @@ class CalculationConnectorSpec
 
         val summaryData = CalculationSummaryData(None, None, 1, 2, 3, 4, 5)
 
-        server.stubFor(
+        wireMockServer.stubFor(
           get(urlEqualTo("/apr-24-nic-change-calculator/summary"))
             .willReturn(ok(Json.toJson(summaryData).toString))
         )
@@ -73,7 +74,7 @@ class CalculationConnectorSpec
 
         val summaryData = CalculationSummaryData(None, None, 1, 2, 3, 4, 5)
 
-        server.stubFor(
+        wireMockServer.stubFor(
           get(urlEqualTo("/apr-24-nic-change-calculator/summary?from=1970-01-01T00:00:01Z"))
             .willReturn(ok(Json.toJson(summaryData).toString))
         )
@@ -87,7 +88,7 @@ class CalculationConnectorSpec
 
         val summaryData = CalculationSummaryData(None, None, 1, 2, 3, 4, 5)
 
-        server.stubFor(
+        wireMockServer.stubFor(
           get(urlEqualTo("/apr-24-nic-change-calculator/summary?to=1970-01-01T00:00:01Z"))
             .willReturn(ok(Json.toJson(summaryData).toString))
         )
@@ -102,7 +103,7 @@ class CalculationConnectorSpec
 
         val summaryData = CalculationSummaryData(None, None, 1, 2, 3, 4, 5)
 
-        server.stubFor(
+        wireMockServer.stubFor(
           get(urlEqualTo("/apr-24-nic-change-calculator/summary?from=1970-01-01T00:00:01Z&to=1970-01-01T00:00:02Z"))
             .willReturn(ok(Json.toJson(summaryData).toString))
         )
@@ -113,7 +114,7 @@ class CalculationConnectorSpec
 
     "must return a failed future when the server responds with an error" in {
 
-      server.stubFor(
+      wireMockServer.stubFor(
         get(urlEqualTo("/apr-24-nic-change-calculator/summary"))
           .willReturn(serverError())
       )
