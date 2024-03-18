@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.apr24nicchangecalculatoradminfrontend.config
+package config
 
 import com.google.inject.AbstractModule
 
