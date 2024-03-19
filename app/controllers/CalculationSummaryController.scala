@@ -48,7 +48,7 @@ class CalculationSummaryController @Inject()(
   )
 
   def onPageLoad(from: Option[Instant], to: Option[Instant]): Action[AnyContent] =
-    Action.async { implicit request =>
+    authorised(from, to).async { implicit request =>
       connector.summaries(from, to).map {
         summaryData =>
           Ok(view(summaryData))
