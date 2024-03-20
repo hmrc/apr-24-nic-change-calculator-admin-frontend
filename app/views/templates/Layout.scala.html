@@ -14,23 +14,20 @@
  * limitations under the License.
  *@
 
-@import config.AppConfig
-@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcStandardPage
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.HmrcStandardPageParams
-
 @this(
-        appConfig: AppConfig,
-        hmrcStandardPage: HmrcStandardPage
+        govukLayout: GovukLayout,
+        hmrcInternalHead: HmrcInternalHead,
+        hmrcInternalHeader: HmrcInternalHeader,
+        twoThirdsContent: TwoThirdsMainContent,
+        govukBackLink: GovukBackLink
 )
-@(pageTitle: Option[String] = None)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
-@hmrcStandardPage(
-  HmrcStandardPageParams(
+@(pageTitle: Option[String] = None, showBackLink: Boolean = true, pageLayout: Html => Html = twoThirdsContent(_))(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+
+@govukLayout(
     pageTitle = pageTitle,
-    isWelshTranslationAvailable = appConfig.welshLanguageSupportEnabled
-  )
+    headBlock = Some(hmrcInternalHead()),
+    headerBlock = Some(hmrcInternalHeader(InternalHeader(serviceName = Some(messages("service.name"))))),
+    beforeContentBlock = None,
+    mainContentLayout = Some(pageLayout)
 )(contentBlock)
-
-@{
-    //$COVERAGE-OFF$
-}
