@@ -10,3 +10,7 @@ calculationSummary.numberOfUniqueSessions = Number of unique sessions
 calculationSummary.numberOfCalculationsWithNoSavings = Number of calculations with no savings
 calculationSummary.numberOfCalculationsWithMinimalSavings = Number of calculations with minimal savings
 calculationSummary.averageSalary = Average salary
+calculationSummary.totalSavingsDec23Apr24 = Total savings Dec 2023 vs. Apr 2024
+calculationSummary.totalSavingsMar24Apr24 = Total savings Mar 2024 vs. Apr 2024
+calculationSummary.totalSavingsAveragedBySessionDec23Apr24 = Total savings (averaged by session) Dec 2023 vs. Apr 2024
+calculationSummary.totalSavingsAveragedBySessionMar24Apr24 = Total savings (averaged by session) Mar 2024 vs. Apr 2024
